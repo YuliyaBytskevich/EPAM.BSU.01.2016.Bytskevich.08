@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1.GenericMatirx", "Task1.GenericMatirx\Task1.GenericMatirx.csproj", "{6C70F0D3-9977-43A1-ABA2-5D2EA9B2FAB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{5EB0E8CA-E432-4707-944F-54E149577783}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C70F0D3-9977-43A1-ABA2-5D2EA9B2FAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C70F0D3-9977-43A1-ABA2-5D2EA9B2FAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C70F0D3-9977-43A1-ABA2-5D2EA9B2FAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C70F0D3-9977-43A1-ABA2-5D2EA9B2FAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB0E8CA-E432-4707-944F-54E149577783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB0E8CA-E432-4707-944F-54E149577783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB0E8CA-E432-4707-944F-54E149577783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB0E8CA-E432-4707-944F-54E149577783}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
