@@ -12,7 +12,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            ElementChangedHandler handlerForSquareM = new ElementChangedHandler();
+            /*ElementChangedHandler handlerForSquareM = new ElementChangedHandler();
             ElementChangedHandler handlerForDiagM = new ElementChangedHandler();
             ElementChangedHandler handlerForSymmM = new ElementChangedHandler();
             SquareMatrix<int> squareM = new SquareMatrix<int>(3, handlerForSquareM);
@@ -45,10 +45,31 @@ namespace ConsoleApplication1
             Console.WriteLine(second);
 
             SquareMatrix<string> third = first + second;
-            Console.WriteLine(third);
+            Console.WriteLine(third);*/
+
+           
+
+            ElementChangedHandler<EventArgs> handlerForSquareM = new ElementChangedHandler<EventArgs>();
+            SquareMatrix<int, EventArgs> squareM = new SquareMatrix<int, EventArgs>(3);
+            squareM.EnableHandlingOnChanging(handlerForSquareM);
+            squareM.AddCustomEventOnChanging(WriteSomething);
+            squareM.SetCellValue(0, 0, 10);
+            squareM.SetCellValue(1, 0, -5);
+            squareM.DisableHandlingOnChanging();
+            squareM.SetCellValue(0, 1, -3);
+            Console.WriteLine(squareM);
+
 
 
             Console.ReadKey();
         }
+
+        public static void WriteSomething(Object sender, EventArgs e)
+        {
+            Console.WriteLine("changing some element");
+            
+        }
+
+
     }
 }

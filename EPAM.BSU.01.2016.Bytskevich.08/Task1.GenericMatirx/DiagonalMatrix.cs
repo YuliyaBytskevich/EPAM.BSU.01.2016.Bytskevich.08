@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Task1.GenericMatirx
 {
-    public class DiagonalMatrix<T> : SquareMatrix<T>
+    public class DiagonalMatrix<T, U> : SquareMatrix<T, U> where U: new()
 {
-        public DiagonalMatrix(int order, ElementChangedHandler handler)
+        public DiagonalMatrix(int order)
         {
+            if (order <= 0)
+                throw new ArgumentException("Matrix order must be a positive integer value");
             elements = new T[order, order];
             Order = order;
-            changesHandler = handler;
-            changesHandler.ElementChanged += DefaultEvent;
         }
 
         protected override bool ValidateInputElement(int rowIndex, int columnIndex, T value)
@@ -28,11 +28,6 @@ namespace Task1.GenericMatirx
             }
             elements[rowIndex, columnIndex] = default(T);
             return false;
-        }
-
-        protected override void DefaultEvent(Object sender, EventArgs eventArgs)
-        {
-            Debug.WriteLine("DIAGONAL MATRIX: element change event");
         }
 
     }

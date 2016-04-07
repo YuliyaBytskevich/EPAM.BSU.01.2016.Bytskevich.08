@@ -14,6 +14,8 @@ namespace Task1.GenericMatirx
         public T ElementValue { get; }
         public string Message { get; }
 
+        public ElementChangedEventArgs() { } 
+
         public ElementChangedEventArgs(Func<int, int, T, bool> doSomethingWithElement, int rowIndex, int columnIndex, T value, string message)
         {
             DoSomethingWithElement = doSomethingWithElement;

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Task1.GenericMatirx
 {
-    public class SymmetricMatrix<T> : SquareMatrix<T> 
+    public class SymmetricMatrix<T, U> : SquareMatrix<T, U> where U : new()
     {
-        public SymmetricMatrix(int order, ElementChangedHandler handler)
+        public SymmetricMatrix(int order)
         {
+            if (order <= 0)
+                throw new ArgumentException("Matrix order must be a positive integer value");
             elements = new T[order, order];
             Order = order;
-            changesHandler = handler; //TODO: make it not reqired parameter
-            changesHandler.ElementChanged += DefaultEvent;
         }
 
         protected override bool ValidateInputElement(int rowIndex, int columnIndex, T value)
@@ -29,11 +29,6 @@ namespace Task1.GenericMatirx
             }
             elements[rowIndex, columnIndex] = value;
             return false;
-        }
-
-        protected override void DefaultEvent(Object sender, EventArgs eventArgs)
-        {
-            Debug.WriteLine("SYMMETRIC MATRIX: element change event");
         }
 
     }

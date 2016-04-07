@@ -8,36 +8,40 @@ using System.Threading.Tasks;
 
 namespace Task1.GenericMatirx
 {
-    public class SquareMatrix<T>
+    public class SquareMatrix<T, U>: IChangesHandleable<U> where U: new()
     {
         public int Order { get; protected set; }
         protected T[,] elements;
-        protected static ElementChangedHandler changesHandler;
+        protected ElementChangedHandler<U> handler;
 
         protected SquareMatrix() { }
 
-        public SquareMatrix(int order, ElementChangedHandler handler)
+        public SquareMatrix(int order)
         {
+            if (order <= 0 )
+                throw new ArgumentException("Matrix order must be a positive integer value");
             elements = new T[order, order];
             Order = order;
-            changesHandler = handler;
-            changesHandler.ElementChanged += DefaultEvent;
         }
 
         public virtual void SetCellValue(int rowIndex, int columnIndex, T value)
         {
             ValidateInputElement(rowIndex, columnIndex, value);
-            changesHandler.ActAsElementIsChanged();
+            handler?.ActAsElementIsChanged();
         }
 
         public T GetCellValue(int rowIndex, int columnIndex)
         {
+            if (rowIndex < 0 || rowIndex >= Order || columnIndex < 0 || columnIndex >= Order)
+                throw new ArgumentOutOfRangeException();
             return elements[rowIndex, columnIndex];
         }
 
-        public static SquareMatrix<T> operator +(SquareMatrix<T> first, SquareMatrix<T> second)
+        public static SquareMatrix<T, U> operator +(SquareMatrix<T, U> first, SquareMatrix<T, U> second)
         {
-            SquareMatrix<T> result = new SquareMatrix<T>(Math.Max(first.Order, second.Order), changesHandler);
+            if (first == null || second == null)
+                throw new ArgumentNullException();
+            SquareMatrix<T, U> result = new SquareMatrix<T, U>(Math.Max(first.Order, second.Order));
             try
             {
                 for (int i = 0; i < first.Order; i++)
@@ -74,11 +78,6 @@ namespace Task1.GenericMatirx
             return true;
         }
 
-        protected virtual void DefaultEvent(Object sender, EventArgs eventArgs)
-        {
-            Debug.WriteLine("SQUARE MATRIX: element change event");
-        } 
-
         private static T Add<T>(T a, T b)
         {
             ParameterExpression paramA = Expression.Parameter(typeof(T), "a"), paramB = Expression.Parameter(typeof(T), "b");
@@ -87,6 +86,22 @@ namespace Task1.GenericMatirx
             return add(a, b);
         }
 
+        #region IChangesHandleable methods
+        public void EnableHandlingOnChanging(ElementChangedHandler<U> handler)
+        {
+            this.handler = handler;
+        }
+
+        public void DisableHandlingOnChanging()
+        {
+            handler = null;
+        }
+
+        public void AddCustomEventOnChanging(EventHandler<U> customEvent)
+        {
+            handler.ElementChanged += customEvent;
+        }
+        #endregion
     }
 
 }
