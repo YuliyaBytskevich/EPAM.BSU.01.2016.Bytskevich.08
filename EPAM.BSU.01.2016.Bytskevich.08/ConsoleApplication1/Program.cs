@@ -12,17 +12,20 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            SquareMatrix<int> squareM = new SquareMatrix<int>(3);
+            ElementChangedHandler handlerForSquareM = new ElementChangedHandler();
+            ElementChangedHandler handlerForDiagM = new ElementChangedHandler();
+            ElementChangedHandler handlerForSymmM = new ElementChangedHandler();
+            SquareMatrix<int> squareM = new SquareMatrix<int>(3, handlerForSquareM);
             squareM.SetCellValue(0, 0, 10);
             squareM.SetCellValue(1, 0, -5);
             squareM.SetCellValue(0, 1, -3);
             Console.WriteLine(squareM);
-            DiagonalMatrix<int> diagM = new DiagonalMatrix<int>(5);
+            DiagonalMatrix<int> diagM = new DiagonalMatrix<int>(5, handlerForSquareM);
             diagM.SetCellValue(0,0, 1);
             diagM.SetCellValue(1, 1, 2);
             diagM.SetCellValue(1, 3, 3);
             Console.WriteLine(diagM);
-            SymmetricMatrix<int> symmM = new SymmetricMatrix<int>(5);
+            SymmetricMatrix<int> symmM = new SymmetricMatrix<int>(5, handlerForSymmM);
             symmM.SetCellValue(0,0, 1);
             symmM.SetCellValue(1, 1, 2);
             symmM.SetCellValue(0,1, 10);
@@ -31,6 +34,19 @@ namespace ConsoleApplication1
 
             SquareMatrix<int> squareSum = squareM + diagM + symmM;
             Console.WriteLine(squareSum);
+
+            SquareMatrix<string> first = new SquareMatrix<string>(5, handlerForSquareM);
+            first.SetCellValue(3,3,"hello");
+            first.SetCellValue(3, 4, "world");
+            Console.WriteLine(first);
+
+            SquareMatrix<string> second = new SquareMatrix<string>(5, handlerForSquareM);
+            second.SetCellValue(1, 1, "FUCK!");
+            Console.WriteLine(second);
+
+            SquareMatrix<string> third = first + second;
+            Console.WriteLine(third);
+
 
             Console.ReadKey();
         }

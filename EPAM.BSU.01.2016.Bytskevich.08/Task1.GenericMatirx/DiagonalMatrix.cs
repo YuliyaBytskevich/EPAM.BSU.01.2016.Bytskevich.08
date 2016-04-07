@@ -9,17 +9,12 @@ namespace Task1.GenericMatirx
 {
     public class DiagonalMatrix<T> : SquareMatrix<T>
 {
-        public DiagonalMatrix(int order)
+        public DiagonalMatrix(int order, ElementChangedHandler handler)
         {
             elements = new T[order, order];
             Order = order;
-            changeHandler = new ElementChangedHandler();
-            changeHandler.ElementChanged += ActWhenElementIsChanged;
-        }
-
-        public override void SetCellValue(int rowIndex, int columnIndex, T value)
-        {
-            changeHandler.ActAsElementIsChanged(ValidateInputElement, rowIndex, columnIndex, value, "Diagonal matrix");
+            changesHandler = handler;
+            changesHandler.ElementChanged += DefaultEvent;
         }
 
         protected override bool ValidateInputElement(int rowIndex, int columnIndex, T value)
@@ -33,6 +28,11 @@ namespace Task1.GenericMatirx
             }
             elements[rowIndex, columnIndex] = default(T);
             return false;
+        }
+
+        protected override void DefaultEvent(Object sender, EventArgs eventArgs)
+        {
+            Debug.WriteLine("DIAGONAL MATRIX: element change event");
         }
 
     }

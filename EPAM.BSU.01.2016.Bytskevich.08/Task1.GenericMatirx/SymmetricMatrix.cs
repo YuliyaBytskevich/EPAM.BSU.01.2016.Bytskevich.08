@@ -9,17 +9,12 @@ namespace Task1.GenericMatirx
 {
     public class SymmetricMatrix<T> : SquareMatrix<T> 
     {
-        public SymmetricMatrix(int order)
+        public SymmetricMatrix(int order, ElementChangedHandler handler)
         {
             elements = new T[order, order];
             Order = order;
-            changeHandler = new ElementChangedHandler();
-            changeHandler.ElementChanged += ActWhenElementIsChanged;
-        }
-
-        public override void SetCellValue(int rowIndex, int columnIndex, T value)
-        {
-            changeHandler.ActAsElementIsChanged(ValidateInputElement, rowIndex, columnIndex, value, "Symmetric matrix");
+            changesHandler = handler; //TODO: make it not reqired parameter
+            changesHandler.ElementChanged += DefaultEvent;
         }
 
         protected override bool ValidateInputElement(int rowIndex, int columnIndex, T value)
@@ -34,6 +29,11 @@ namespace Task1.GenericMatirx
             }
             elements[rowIndex, columnIndex] = value;
             return false;
+        }
+
+        protected override void DefaultEvent(Object sender, EventArgs eventArgs)
+        {
+            Debug.WriteLine("SYMMETRIC MATRIX: element change event");
         }
 
     }
